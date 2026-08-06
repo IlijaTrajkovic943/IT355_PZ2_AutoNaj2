@@ -1,9 +1,16 @@
 package com.example.autonaj2.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class FilijalaRequestDto {
 
+    @NotBlank(message = "Naziv je obavezan")
     private String naziv;
+
+    @NotBlank(message = "Grad je obavezan")
     private String grad;
+
+    @NotBlank(message = "Adresa je obavezna")
     private String adresa;
 
     public String getNaziv() {

@@ -1,14 +1,29 @@
 package com.example.autonaj2.dto;
 
 import com.example.autonaj2.entity.Uloga;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 // DTO koji klijent salje kada kreira/menja korisnika
 public class KorisnikRequestDto {
 
+    @NotBlank(message = "Ime je obavezno")
     private String ime;
+
+    @NotBlank(message = "Prezime je obavezno")
     private String prezime;
+
+    @NotBlank(message = "Email je obavezan")
+    @Email(message = "Email nije validnog formata")
     private String email;
+
+    @NotBlank(message = "Lozinka je obavezna")
+    @Size(min = 6, message = "Lozinka mora imati bar 6 karaktera")
     private String lozinka;
+
+    @NotNull(message = "Uloga je obavezna")
     private Uloga uloga;
 
     public String getIme() {

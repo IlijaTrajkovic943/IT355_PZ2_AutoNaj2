@@ -1,8 +1,12 @@
 package com.example.autonaj2.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class KategorijaVozilaRequestDto {
 
+    @NotBlank(message = "Naziv je obavezan")
     private String naziv;
+
     private String opis;
 
     public String getNaziv() {
