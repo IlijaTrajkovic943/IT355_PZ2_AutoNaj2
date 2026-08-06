@@ -4,4 +4,6 @@ import com.example.autonaj2.entity.Automobil;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AutomobilRepository extends JpaRepository<Automobil, Long> {
+
+    boolean existsByRegistarskiBroj(String registarskiBroj);
 }
