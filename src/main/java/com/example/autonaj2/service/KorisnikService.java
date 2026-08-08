@@ -3,6 +3,7 @@ package com.example.autonaj2.service;
 import com.example.autonaj2.dto.KorisnikRequestDto;
 import com.example.autonaj2.entity.Korisnik;
 import com.example.autonaj2.repository.KorisnikRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public class KorisnikService {
 
     private final KorisnikRepository korisnikRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public KorisnikService(KorisnikRepository korisnikRepository) {
+    public KorisnikService(KorisnikRepository korisnikRepository, PasswordEncoder passwordEncoder) {
         this.korisnikRepository = korisnikRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Korisnik> pronadjiSve() {
@@ -36,8 +39,7 @@ public class KorisnikService {
         korisnik.setIme(dto.getIme());
         korisnik.setPrezime(dto.getPrezime());
         korisnik.setEmail(dto.getEmail());
-        // hesiranje lozinke (BCrypt) dolazi u F7 kad podesimo Spring Security
-        korisnik.setLozinka(dto.getLozinka());
+        korisnik.setLozinka(passwordEncoder.encode(dto.getLozinka()));
         korisnik.setUloga(dto.getUloga());
         return korisnikRepository.save(korisnik);
     }

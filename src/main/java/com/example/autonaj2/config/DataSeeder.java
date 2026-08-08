@@ -13,6 +13,7 @@ import com.example.autonaj2.repository.KategorijaVozilaRepository;
 import com.example.autonaj2.repository.KorisnikRepository;
 import com.example.autonaj2.repository.RezervacijaRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -27,21 +28,32 @@ public class DataSeeder implements CommandLineRunner {
     private final KategorijaVozilaRepository kategorijaVozilaRepository;
     private final AutomobilRepository automobilRepository;
     private final RezervacijaRepository rezervacijaRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public DataSeeder(KorisnikRepository korisnikRepository,
                        FilijalaRepository filijalaRepository,
                        KategorijaVozilaRepository kategorijaVozilaRepository,
                        AutomobilRepository automobilRepository,
-                       RezervacijaRepository rezervacijaRepository) {
+                       RezervacijaRepository rezervacijaRepository,
+                       PasswordEncoder passwordEncoder) {
         this.korisnikRepository = korisnikRepository;
         this.filijalaRepository = filijalaRepository;
         this.kategorijaVozilaRepository = kategorijaVozilaRepository;
         this.automobilRepository = automobilRepository;
         this.rezervacijaRepository = rezervacijaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) {
+        // korisnici seedovani pre uvodjenja BCrypt-a (F7) imaju lozinku u plain tekstu - hesujemo ih naknadno
+        for (Korisnik postojeci : korisnikRepository.findAll()) {
+            if (!postojeci.getLozinka().startsWith("$2")) {
+                postojeci.setLozinka(passwordEncoder.encode(postojeci.getLozinka()));
+                korisnikRepository.save(postojeci);
+            }
+        }
+
         // seed se pokrece samo ako je baza prazna, da se podaci ne dupliraju pri svakom restartu
         if (korisnikRepository.count() > 0) {
             return;
@@ -51,7 +63,7 @@ public class DataSeeder implements CommandLineRunner {
         admin.setIme("Petar");
         admin.setPrezime("Petrovic");
         admin.setEmail("admin@autonaj.rs");
-        admin.setLozinka("admin123");
+        admin.setLozinka(passwordEncoder.encode("admin123"));
         admin.setUloga(Uloga.ROLE_ADMIN);
         korisnikRepository.save(admin);
 
@@ -59,7 +71,7 @@ public class DataSeeder implements CommandLineRunner {
         korisnik.setIme("Marko");
         korisnik.setPrezime("Markovic");
         korisnik.setEmail("marko@autonaj.rs");
-        korisnik.setLozinka("user123");
+        korisnik.setLozinka(passwordEncoder.encode("user123"));
         korisnik.setUloga(Uloga.ROLE_USER);
         korisnikRepository.save(korisnik);
 
