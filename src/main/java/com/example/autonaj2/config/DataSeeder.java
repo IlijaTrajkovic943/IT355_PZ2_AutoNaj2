@@ -13,6 +13,7 @@ import com.example.autonaj2.repository.KategorijaVozilaRepository;
 import com.example.autonaj2.repository.KorisnikRepository;
 import com.example.autonaj2.repository.RezervacijaRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 // CommandLineRunner - metoda run() se izvrsava automatski jednom, odmah nakon sto se aplikacija pokrene
+// @Profile("!test") - seeder se ne pokrece kada aplikacija radi pod test profilom (integracioni testovi imaju cistu H2 bazu)
 @Component
+@Profile("!test")
 public class DataSeeder implements CommandLineRunner {
 
     private final KorisnikRepository korisnikRepository;
