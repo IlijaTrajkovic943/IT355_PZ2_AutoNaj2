@@ -3,6 +3,7 @@ package com.example.autonaj2.config;
 import com.example.autonaj2.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -49,6 +50,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").authenticated()
+                        .requestMatchers("/api/rezervacije/**").authenticated()
+                        .requestMatchers("/api/korisnici/**").hasRole("ADMIN")
+                        .requestMatchers("/api/filijale/**").hasRole("ADMIN")
+                        .requestMatchers("/api/kategorije/**").hasRole("ADMIN")
+                        .requestMatchers("/api/automobili/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

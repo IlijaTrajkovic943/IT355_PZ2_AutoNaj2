@@ -4,6 +4,7 @@ import com.example.autonaj2.dto.GreskaOdgovor;
 import com.example.autonaj2.service.NijeNadjenoException;
 import com.example.autonaj2.service.PoslovnoPraviloException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,12 @@ public class GlobalniExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public GreskaOdgovor obradiPoslovnoPravilo(PoslovnoPraviloException ex) {
         return new GreskaOdgovor(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public GreskaOdgovor obradiPogresnePodatke(BadCredentialsException ex) {
+        return new GreskaOdgovor(HttpStatus.UNAUTHORIZED.value(), "Pogresan email ili lozinka");
     }
 
     // aktivira se kada @Valid na @RequestBody DTO-u otkrije neispravne podatke
