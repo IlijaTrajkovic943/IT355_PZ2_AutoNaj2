@@ -3,14 +3,24 @@ package com.example.autonaj2.dto;
 // odgovor nakon uspesne prijave/registracije - nosi JWT token i osnovne podatke o korisniku
 public class PrijavaOdgovorDto {
 
+    private Long korisnikId;
     private String token;
     private String email;
     private String uloga;
 
-    public PrijavaOdgovorDto(String token, String email, String uloga) {
+    public PrijavaOdgovorDto(Long korisnikId, String token, String email, String uloga) {
+        this.korisnikId = korisnikId;
         this.token = token;
         this.email = email;
         this.uloga = uloga;
+    }
+
+    public Long getKorisnikId() {
+        return korisnikId;
+    }
+
+    public void setKorisnikId(Long korisnikId) {
+        this.korisnikId = korisnikId;
     }
 
     public String getToken() {

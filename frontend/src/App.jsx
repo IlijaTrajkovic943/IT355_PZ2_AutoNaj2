@@ -4,6 +4,8 @@ import ZahtevanaAutentifikacija from './components/ZahtevanaAutentifikacija'
 import PrijavaPage from './pages/PrijavaPage'
 import RegistracijaPage from './pages/RegistracijaPage'
 import PocetnaPage from './pages/PocetnaPage'
+import AutomobiliPage from './pages/AutomobiliPage'
+import AdminPage from './pages/AdminPage'
 import './App.css'
 
 function App() {
@@ -18,6 +20,22 @@ function App() {
             element={
               <ZahtevanaAutentifikacija>
                 <PocetnaPage />
+              </ZahtevanaAutentifikacija>
+            }
+          />
+          <Route
+            path="/automobili"
+            element={
+              <ZahtevanaAutentifikacija>
+                <AutomobiliPage />
+              </ZahtevanaAutentifikacija>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ZahtevanaAutentifikacija>
+                <AdminPage />
               </ZahtevanaAutentifikacija>
             }
           />

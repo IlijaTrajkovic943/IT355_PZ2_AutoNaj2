@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
     }
     return {
       token,
+      korisnikId: localStorage.getItem('korisnikId'),
       email: localStorage.getItem('email'),
       uloga: localStorage.getItem('uloga'),
     }
@@ -19,13 +20,20 @@ export function AuthProvider({ children }) {
 
   function prijaviKorisnika(odgovor) {
     localStorage.setItem('token', odgovor.token)
+    localStorage.setItem('korisnikId', odgovor.korisnikId)
     localStorage.setItem('email', odgovor.email)
     localStorage.setItem('uloga', odgovor.uloga)
-    setKorisnik({ token: odgovor.token, email: odgovor.email, uloga: odgovor.uloga })
+    setKorisnik({
+      token: odgovor.token,
+      korisnikId: odgovor.korisnikId,
+      email: odgovor.email,
+      uloga: odgovor.uloga,
+    })
   }
 
   function odjaviKorisnika() {
     localStorage.removeItem('token')
+    localStorage.removeItem('korisnikId')
     localStorage.removeItem('email')
     localStorage.removeItem('uloga')
     setKorisnik(null)

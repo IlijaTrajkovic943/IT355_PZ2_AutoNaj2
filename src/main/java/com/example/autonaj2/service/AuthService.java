@@ -44,7 +44,7 @@ public class AuthService {
         korisnikRepository.save(korisnik);
 
         String token = jwtService.generisiToken(korisnik.getEmail(), korisnik.getUloga().name());
-        return new PrijavaOdgovorDto(token, korisnik.getEmail(), korisnik.getUloga().name());
+        return new PrijavaOdgovorDto(korisnik.getId(), token, korisnik.getEmail(), korisnik.getUloga().name());
     }
 
     public PrijavaOdgovorDto prijavi(PrijavaRequestDto dto) {
@@ -55,6 +55,6 @@ public class AuthService {
                 .orElseThrow(() -> new NijeNadjenoException("Korisnik ne postoji"));
 
         String token = jwtService.generisiToken(korisnik.getEmail(), korisnik.getUloga().name());
-        return new PrijavaOdgovorDto(token, korisnik.getEmail(), korisnik.getUloga().name());
+        return new PrijavaOdgovorDto(korisnik.getId(), token, korisnik.getEmail(), korisnik.getUloga().name());
     }
 }
