@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/rezervacije/*/potvrdi").hasRole("ADMIN")
                         .requestMatchers("/api/rezervacije/**").authenticated()
                         .requestMatchers("/api/korisnici/**").hasRole("ADMIN")
                         .requestMatchers("/api/filijale/**").hasRole("ADMIN")

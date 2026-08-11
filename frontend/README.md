@@ -1,16 +1,23 @@
-# React + Vite
+# AutoNaj 2 - frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React (Vite) aplikacija za sistem za iznajmljivanje vozila (drugi projektni zadatak, IT355). Komunicira sa backend REST API-jem iz korenskog foldera projekta.
 
-Currently, two official plugins are available:
+## Tehnologije
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite
+- react-router-dom
+- axios (JWT token se automatski šalje kroz `Authorization` header)
 
-## React Compiler
+## Pokretanje
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Prvo pokrenuti backend (videti `../README.md`) na `http://localhost:8080`.
+2. Instalirati zavisnosti: `npm install`
+3. Pokrenuti dev server: `npm run dev`
+4. Otvoriti `http://localhost:5173`.
 
-## Expanding the Oxlint configuration
+## Stranice
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- `/prijava`, `/registracija` - prijava i registracija korisnika
+- `/` - početna strana
+- `/automobili` - pregled vozila i kreiranje rezervacije
+- `/admin` - upravljanje filijalama, kategorijama i automobilima (samo ADMIN uloga)

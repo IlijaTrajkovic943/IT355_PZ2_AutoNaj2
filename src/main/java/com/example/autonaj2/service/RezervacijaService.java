@@ -78,6 +78,13 @@ public class RezervacijaService {
     }
 
     @Transactional
+    public Rezervacija potvrdi(Long id) {
+        Rezervacija rezervacija = pronadjiPoId(id);
+        rezervacija.setStatus(StatusRezervacije.POTVRDJENA);
+        return rezervacijaRepository.save(rezervacija);
+    }
+
+    @Transactional
     public void obrisi(Long id) {
         Rezervacija rezervacija = pronadjiPoId(id);
         rezervacijaRepository.delete(rezervacija);

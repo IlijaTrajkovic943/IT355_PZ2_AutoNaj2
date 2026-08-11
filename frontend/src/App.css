@@ -171,6 +171,11 @@ body {
   cursor: pointer;
 }
 
+.admin-sekcija li .dugme-potvrdi {
+  margin-left: auto;
+  background-color: #1e8449;
+}
+
 .admin-forma {
   display: flex;
   flex-wrap: wrap;

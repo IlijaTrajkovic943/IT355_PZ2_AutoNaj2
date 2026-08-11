@@ -48,6 +48,11 @@ public class RezervacijaController {
         return RezervacijaDto.fromEntity(rezervacijaService.otkazi(id));
     }
 
+    @PatchMapping("/{id}/potvrdi")
+    public RezervacijaDto potvrdiRezervaciju(@PathVariable Long id) {
+        return RezervacijaDto.fromEntity(rezervacijaService.potvrdi(id));
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void obrisiRezervaciju(@PathVariable Long id) {

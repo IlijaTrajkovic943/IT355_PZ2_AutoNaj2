@@ -155,6 +155,39 @@ class RezervacijaControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
+    void potvrdi_postavljaStatusPotvrdjena() throws Exception {
+        Rezervacija rezervacija = new Rezervacija();
+        rezervacija.setKorisnik(korisnikRepository.findById(korisnikId).orElseThrow());
+        rezervacija.setAutomobil(automobilRepository.findById(automobilId).orElseThrow());
+        rezervacija.setDatumOd(LocalDate.now().plusDays(1));
+        rezervacija.setDatumDo(LocalDate.now().plusDays(2));
+        rezervacija.setUkupnaCena(new BigDecimal("30.00"));
+        rezervacija.setStatus(StatusRezervacije.NA_CEKANJU);
+        Long id = rezervacijaRepository.save(rezervacija).getId();
+
+        mockMvc.perform(patch("/api/rezervacije/" + id + "/potvrdi"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("POTVRDJENA"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void potvrdi_obicnomKorisnikuVraca403() throws Exception {
+        Rezervacija rezervacija = new Rezervacija();
+        rezervacija.setKorisnik(korisnikRepository.findById(korisnikId).orElseThrow());
+        rezervacija.setAutomobil(automobilRepository.findById(automobilId).orElseThrow());
+        rezervacija.setDatumOd(LocalDate.now().plusDays(1));
+        rezervacija.setDatumDo(LocalDate.now().plusDays(2));
+        rezervacija.setUkupnaCena(new BigDecimal("30.00"));
+        rezervacija.setStatus(StatusRezervacije.NA_CEKANJU);
+        Long id = rezervacijaRepository.save(rezervacija).getId();
+
+        mockMvc.perform(patch("/api/rezervacije/" + id + "/potvrdi"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     @WithMockUser(roles = "USER")
     void obrisi_dozvoljenoIObicnomKorisniku() throws Exception {
         Rezervacija rezervacija = new Rezervacija();

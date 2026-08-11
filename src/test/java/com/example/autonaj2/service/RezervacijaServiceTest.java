@@ -116,4 +116,17 @@ class RezervacijaServiceTest {
 
         assertEquals(StatusRezervacije.OTKAZANA, rezultat.getStatus());
     }
+
+    @Test
+    void potvrdi_postavljaStatusPotvrdjena() {
+        Rezervacija rezervacija = new Rezervacija();
+        rezervacija.setId(8L);
+        rezervacija.setStatus(StatusRezervacije.NA_CEKANJU);
+        when(rezervacijaRepository.findById(8L)).thenReturn(Optional.of(rezervacija));
+        when(rezervacijaRepository.save(any(Rezervacija.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        Rezervacija rezultat = rezervacijaService.potvrdi(8L);
+
+        assertEquals(StatusRezervacije.POTVRDJENA, rezultat.getStatus());
+    }
 }

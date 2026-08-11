@@ -4,6 +4,7 @@ import Navigacija from '../components/Navigacija'
 import FilijaleSekcija from './admin/FilijaleSekcija'
 import KategorijeSekcija from './admin/KategorijeSekcija'
 import AutomobiliSekcija from './admin/AutomobiliSekcija'
+import RezervacijeSekcija from './admin/RezervacijeSekcija'
 
 function AdminPage() {
   const { korisnik } = useAuth()
@@ -18,6 +19,7 @@ function AdminPage() {
       <Navigacija />
       <div className="lista-kontejner">
         <h1>Admin panel</h1>
+        <RezervacijeSekcija />
         <FilijaleSekcija />
         <KategorijeSekcija />
         <AutomobiliSekcija />
