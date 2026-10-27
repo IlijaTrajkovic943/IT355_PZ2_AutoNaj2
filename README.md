@@ -5,19 +5,24 @@ Spring Boot REST API za sistem za iznajmljivanje vozila (drugi projektni zadatak
 ## Tehnologije
 
 - Java 26, Spring Boot 4.1
-- Spring Data JPA + MySQL
+- Spring Data JPA + H2 In-Memory Baza
 - Spring Security 7 + JWT (jjwt)
 - BCrypt heširanje lozinki
 - JUnit 5, Mockito, MockMvc (H2 in-memory za testove)
 
 ## Pokretanje
 
-1. Pokrenuti MySQL (npr. preko XAMPP-a).
-2. U phpMyAdmin-u (ili drugim alatom) napraviti praznu bazu pod imenom `autonaj_db` - nije potrebno kreirati tabele ni uvoziti bilo kakav SQL dump, samo prazna baza sa tim imenom.
-3. Pokrenuti `Autonaj2Application` iz IDE-a ili `./mvnw spring-boot:run`. Hibernate pri pokretanju sam kreira sve tabele (`spring.jpa.hibernate.ddl-auto=update`), a `DataSeeder` ih automatski puni test podacima.
-4. API je dostupan na `http://localhost:8080`.
+1. Pokrenuti `Autonaj2Application` iz IDE-a ili preko komande `./mvnw spring-boot:run`.
+2. Hibernate pri pokretanju automatski kreira sve tabele u H2 bazi u memoriji (`spring.jpa.hibernate.ddl-auto=update`), a `DataSeeder` ih automatski puni test podacima. Nije potrebna nikakva prethodna instalacija baze niti pokretanje eksternih servisa (XAMPP/MySQL).
+3. API je dostupan na `http://localhost:8080`.
 
-Konekcija na bazu (ime, korisnik, lozinka) je podešena u `src/main/resources/application.properties`.
+### H2 Web Konzola
+
+Pregled baze u memoriji i kreiranih tabela dostupan je putem pretraživača dok je aplikacija pokrenuta:
+- **URL:** `http://localhost:8080/h2-console`
+- **JDBC URL:** `jdbc:h2:mem:testdb`
+- **User Name:** `sa`
+- **Password:** *(prazno)*
 
 Test nalozi koje `DataSeeder` kreira:
 
@@ -28,10 +33,5 @@ Test nalozi koje `DataSeeder` kreira:
 
 ## Testovi
 
-```
+```bash
 ./mvnw test
-```
-
-## Frontend
-
-React aplikacija se nalazi u `frontend/` folderu - videti `frontend/README.md`.
